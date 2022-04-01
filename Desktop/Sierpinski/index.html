@@ -1,0 +1,60 @@
+
+<!-- My spontaneous code to draw a Sierpinski triangle! I just wanted to see if this actually worked or was a Tik Tok myth. -->
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <canvas
+      id="myCanvas"
+      width="500"
+      height="500"
+      style="border: 1px solid #d3d3d3"
+    >
+      Your browser does not support the HTML5 canvas tag.</canvas
+    >
+
+    <script>
+      //Mocks drawing a point by drawing a small circle
+      function drawPnt(x, y) {
+        ctx.beginPath();
+        ctx.arc(x, y, 1, 0, 2 * Math.PI);
+        ctx.stroke();
+      }
+
+      //generates a number from [0, max)
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+
+      var vertices = [
+        [50, 450],
+        [250, 50],
+        [450, 450],
+      ]; //define bounds of outer triangle
+      var randX = 250; //random starting point X
+      var randY = 250; //random starting point Y
+      const MAX_ITERS = 1e6;
+
+      drawPnt(vertices[0][0], vertices[0][1]); //bottom left of outer triangle bounds
+      drawPnt(vertices[1][0], vertices[1][1]); //top middle of outer triangle bounds
+      drawPnt(vertices[2][0], vertices[2][1]); //bottom right of outer triangle bounds
+
+      for (let i = 0; i < MAX_ITERS; i++) {
+        let randVertex = getRandomInt(3);
+
+        let newX =
+          (randX - vertices[randVertex][0]) / 2 + vertices[randVertex][0];
+        let newY =
+          (randY - vertices[randVertex][1]) / 2 + vertices[randVertex][1];
+
+        drawPnt(newX, newY);
+
+        randX = newX;
+        randY = newY;
+      }
+    </script>
+  </body>
+</html>
